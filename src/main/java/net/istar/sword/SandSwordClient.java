@@ -6,6 +6,5 @@ public class SandSwordClient implements ClientModInitializer
 {
     @Override
     public void onInitializeClient(){
-
     }
 }
