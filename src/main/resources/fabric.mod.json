@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "sandsword",
+	"version": "${version}",
+	"name": "Sand Sword",
+	"description": "Sand Sword",
+	"authors": [
+		"IStar"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/sandsword/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.istar.sword.SandSword"
+		],
+		"client": [
+			"net.istar.sword.SandSwordClient"
+		],
+		"fabric-datagen": [
+			"net.istar.sword.SandSwordDataGenerator"
+		]
+	},
+	"mixins": [
+		"sandsword.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.7",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
