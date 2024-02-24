@@ -1,6 +1,7 @@
 package net.istar.sword.entity.custom;
 
 import net.istar.sword.entity.ModEntities;
+import net.istar.sword.entity.procedures.DuneEdgeWhileProjectileFlyingTickProcedure;
 import net.istar.sword.item.ModItems;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -29,6 +30,7 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
     private static final TrackedData<Boolean> ENCHANTED = DataTracker.registerData(DuneEdgeEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private boolean dealtDamage;
     private static final ItemStack DEFAULT_STACK = new ItemStack(ModItems.DUNEEDGE);
+    private ItemStack stack;
 
     public DuneEdgeEntity(EntityType<DuneEdgeEntity> entityType, World world) {
         super(entityType, world, DEFAULT_STACK);
@@ -36,6 +38,10 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
     public DuneEdgeEntity(World world, LivingEntity owner, ItemStack stack) {
         super(ModEntities.DUNEEDGE, owner, world, stack);
         this.dataTracker.set(ENCHANTED, stack.hasGlint());
+        this.stack = stack.copy();
+        if (stack.hasCustomName()) {
+            this.setCustomName(stack.getName());
+        }
     }
 
     @Override
@@ -107,4 +113,18 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
     public boolean isEnchanted() {
         return this.dataTracker.get(ENCHANTED);
     }
+    @Override
+    protected boolean tryPickup(PlayerEntity player) {
+        return super.tryPickup(player) || this.isNoClip() && this.isOwner(player) && player.getInventory().insertStack(this.asItemStack());
+    }
+    @Override
+    protected ItemStack asItemStack() {
+        return this.stack.copyWithCount(1);
+    }
+    @Override
+    public void tick() {
+        super.tick();
+        DuneEdgeWhileProjectileFlyingTickProcedure.execute(this.getWorld(), this.getX(), this.getY(), this.getZ());
+    }
+
 }
