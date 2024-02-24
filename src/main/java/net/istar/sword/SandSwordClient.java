@@ -1,15 +1,14 @@
 package net.istar.sword;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.istar.sword.client.renderer.DuneEdgeRenderer;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.istar.sword.entity.ModEntities;
+import net.istar.sword.entity.custom.DuneEdgeEntityRenderer;
 
 public class SandSwordClient implements ClientModInitializer
 {
     @Override
     public void onInitializeClient(){
-        EntityRendererRegistry.INSTANCE.register(SandSword.MOD_ID, (dispatcher, context) -> {
-            return new DuneEdgeRenderer(dispatcher);
-        });
+        EntityRendererRegistry.register(ModEntities.DUNEEDGE, DuneEdgeEntityRenderer::new);
     }
 }
