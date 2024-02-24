@@ -11,7 +11,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public abstract class ModEntities {
-    public static final EntityType<DuneEdgeEntity> DUNEEDGE = Registry.register(Registries.ENTITY_TYPE,
-            new Identifier(SandSword.MOD_ID, "duneedge"), FabricEntityTypeBuilder.<DuneEdgeEntity>create(SpawnGroup.MISC, DuneEdgeEntity:: new)
-                    .dimensions(EntityDimensions.fixed(0.5f,0.5f)).build());
+
+    public static final EntityType<DuneEdgeEntity> DUNEEDGE;
+    static {
+        DUNEEDGE = Registry.register(Registries.ENTITY_TYPE,
+                new Identifier(SandSword.MOD_ID, "duneedge"), FabricEntityTypeBuilder.<DuneEdgeEntity>create(SpawnGroup.MISC, DuneEdgeEntity::new)
+                        .dimensions(EntityDimensions.fixed(0.5f,0.5f)).build());
+    }
 }

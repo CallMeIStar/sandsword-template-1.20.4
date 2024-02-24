@@ -2,6 +2,7 @@ package net.istar.sword.entity.custom;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.istar.sword.SandSword;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,7 +17,7 @@ import net.minecraft.util.math.RotationAxis;
 @Environment(value= EnvType.CLIENT)
 public class DuneEdgeEntityRenderer
         extends EntityRenderer<DuneEdgeEntity> {
-    public static final Identifier TEXTURE = new Identifier("textures/entity/duneedge.png");
+    public static final Identifier TEXTURE = new Identifier(SandSword.MOD_ID,"textures/entity/duneedge.png");
     private final DuneEdgeEntityModel model;
 
     public DuneEdgeEntityRenderer(EntityRendererFactory.Context context) {

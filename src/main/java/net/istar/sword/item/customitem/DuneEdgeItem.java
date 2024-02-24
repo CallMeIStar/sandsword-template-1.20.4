@@ -8,6 +8,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,11 +21,7 @@ import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
 public class DuneEdgeItem extends Item {
-    public static final int field_30926 = 10;
-    public static final float ATTACK_DAMAGE = 8.0f;
-    public static final float field_30928 = 2.5f;
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
-
     public DuneEdgeItem(Item.Settings settings) {
         super(settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
@@ -41,10 +38,12 @@ public class DuneEdgeItem extends Item {
         ItemStack itemStack = user.getStackInHand(hand);
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
         if (!world.isClient) {
-            DuneEdgeEntity duneEdgeEntity = new DuneEdgeEntity(user, world);
-            duneEdgeEntity.setItem(itemStack);
+            DuneEdgeEntity duneEdgeEntity = new DuneEdgeEntity(world, user, itemStack);
             duneEdgeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 1.5f, 1.0f);
             world.spawnEntity(duneEdgeEntity);
+            if (user.getAbilities().creativeMode) {
+                duneEdgeEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+            }
         }
         user.incrementStat(Stats.USED.getOrCreateStat(this));
         if (!user.getAbilities().creativeMode) {

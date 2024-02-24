@@ -1,5 +1,6 @@
 package net.istar.sword.entity.custom;
 
+import net.istar.sword.entity.ModEntities;
 import net.istar.sword.item.ModItems;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -26,12 +27,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class DuneEdgeEntity extends PersistentProjectileEntity {
     private static final TrackedData<Boolean> ENCHANTED = DataTracker.registerData(DuneEdgeEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final ItemStack PROJECTILE_ITEM = new ItemStack(ModItems.DUNEEDGE);
     private boolean dealtDamage;
+    private static final ItemStack DEFAULT_STACK = new ItemStack(ModItems.DUNEEDGE);
 
-    public DuneEdgeEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-
-        super(entityType, world, PROJECTILE_ITEM);
+    public DuneEdgeEntity(EntityType<DuneEdgeEntity> entityType, World world) {
+        super(entityType, world, DEFAULT_STACK);
+    }
+    public DuneEdgeEntity(World world, LivingEntity owner, ItemStack stack) {
+        super(ModEntities.DUNEEDGE, owner, world, stack);
+        this.dataTracker.set(ENCHANTED, stack.hasGlint());
     }
 
     @Override
@@ -49,8 +53,7 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
         float f = 8.0f;
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity)entity;
+        if (entity instanceof LivingEntity livingEntity) {
             f += EnchantmentHelper.getAttackDamage(this.getItemStack(), livingEntity.getGroup());
         }
         Entity entity2 = this.getOwner();
@@ -61,8 +64,7 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
             if (entity.getType() == EntityType.ENDERMAN) {
                 return;
             }
-            if (entity instanceof LivingEntity) {
-                LivingEntity livingEntity2 = (LivingEntity)entity;
+            if (entity instanceof LivingEntity livingEntity2) {
                 if (entity2 instanceof LivingEntity) {
                     EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
                     EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity2);
