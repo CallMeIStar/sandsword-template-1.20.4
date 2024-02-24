@@ -11,20 +11,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
-public class SandSwordEntity extends PersistentProjectileEntity {
+public class DuneEdgeEntity extends PersistentProjectileEntity {
     private static final ItemStack PROJECTILE_ITEM = new ItemStack(ModItems.DUNEEDGE);
 
-    public SandSwordEntity(EntityType<SandSwordEntity> entityType, World world) {
+    public DuneEdgeEntity(EntityType<DuneEdgeEntity> entityType, World world) {
         super(entityType, world, PROJECTILE_ITEM);
     }
-    public SandSwordEntity(World world, LivingEntity owner, ItemStack stack) {
+    public DuneEdgeEntity(World world, LivingEntity owner, ItemStack stack) {
         super(ModEntities.DUNEEDGE, owner, world, stack);
     }
-    public SandSwordEntity(EntityType<? extends SandSwordEntity> type, double x, double y, double z, World world) {
+    public DuneEdgeEntity(EntityType<? extends DuneEdgeEntity> type, double x, double y, double z, World world) {
         super(type, x, y, z, world, PROJECTILE_ITEM);
     }
 
-    public SandSwordEntity(EntityType<? extends SandSwordEntity> type, LivingEntity entity, World world) {
+    public DuneEdgeEntity(EntityType<? extends DuneEdgeEntity> type, LivingEntity entity, World world) {
         super(type, world, PROJECTILE_ITEM);
     }
     public static ItemStack getProjectileItem() {
@@ -35,7 +35,7 @@ public class SandSwordEntity extends PersistentProjectileEntity {
         return PROJECTILE_ITEM;
     }
 
-    public static SandSwordEntity createMobAttributes() {
+    public static DuneEdgeEntity createMobAttributes() {
         return null;
     }
 }
