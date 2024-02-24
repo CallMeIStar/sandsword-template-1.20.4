@@ -11,10 +11,10 @@ public class DuneEdgeModel extends EntityModel<DuneEdgeEntity> {
     private final ModelPart base;
 
     public DuneEdgeModel() {
-        this.textureHeight = 64;
-        this.textureWidth = 64;
+        final int textureHeight = 64;
+        final int textureWidth = 64;
 
-        base = new ModelPart(this, 0, 0);
+        base = new ModelPart(this);
         base.addCuboid(-6, -6, -6, 12, 12, 12);
     }
 

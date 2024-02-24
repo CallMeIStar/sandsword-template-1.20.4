@@ -35,7 +35,7 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
         return PROJECTILE_ITEM;
     }
 
-    public static DuneEdgeEntity createMobAttributes() {
+    public DuneEdgeEntity createMobAttributes() {
         return null;
     }
 }
