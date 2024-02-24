@@ -16,7 +16,7 @@ import net.minecraft.util.math.RotationAxis;
 @Environment(value= EnvType.CLIENT)
 public class DuneEdgeEntityRenderer
         extends EntityRenderer<DuneEdgeEntity> {
-    public static final Identifier TEXTURE = new Identifier("textures/item/duneedge.png");
+    public static final Identifier TEXTURE = new Identifier("textures/entity/duneedge.png");
     private final DuneEdgeEntityModel model;
 
     public DuneEdgeEntityRenderer(EntityRendererFactory.Context context) {

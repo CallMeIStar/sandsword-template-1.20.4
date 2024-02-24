@@ -2,21 +2,24 @@ package net.istar.sword.item.customitem;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.istar.sword.entity.custom.DuneEdgeEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Vanishable;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class DuneEdgeItem extends Item implements Vanishable {
+public class DuneEdgeItem extends Item {
     public static final int field_30926 = 10;
     public static final float ATTACK_DAMAGE = 8.0f;
     public static final float field_30928 = 2.5f;
@@ -36,14 +39,18 @@ public class DuneEdgeItem extends Item implements Vanishable {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
-            return TypedActionResult.fail(itemStack);
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
+        if (!world.isClient) {
+            DuneEdgeEntity duneEdgeEntity = new DuneEdgeEntity(user, world);
+            duneEdgeEntity.setItem(itemStack);
+            duneEdgeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 1.5f, 1.0f);
+            world.spawnEntity(duneEdgeEntity);
         }
-        if (EnchantmentHelper.getRiptide(itemStack) > 0 && !user.isTouchingWaterOrRain()) {
-            return TypedActionResult.fail(itemStack);
+        user.incrementStat(Stats.USED.getOrCreateStat(this));
+        if (!user.getAbilities().creativeMode) {
+            itemStack.decrement(1);
         }
-        user.setCurrentHand(hand);
-        return TypedActionResult.consume(itemStack);
+        return TypedActionResult.success(itemStack, world.isClient());
     }
     @Override
     public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
@@ -52,5 +59,6 @@ public class DuneEdgeItem extends Item implements Vanishable {
         }
         return super.getAttributeModifiers(slot);
     }
+
 
 }
