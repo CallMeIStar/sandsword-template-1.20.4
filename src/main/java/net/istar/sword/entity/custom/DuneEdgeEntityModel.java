@@ -1,16 +1,22 @@
 package net.istar.sword.entity.custom;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
+import net.minecraft.util.Identifier;
 
-public class DuneEdgeEntityModel extends EntityModel<Entity> {
-	private final ModelPart duneedge;
+@Environment(value= EnvType.CLIENT)
+public class DuneEdgeEntityModel
+		extends Model {
+	public static final Identifier TEXTURE = new Identifier("textures/entity/duneedge.png");
+	private final ModelPart root;
 	public DuneEdgeEntityModel(ModelPart root) {
+        super(RenderLayer::getEntitySolid);
 
-		this.duneedge = root.getChild("duneedge");
+        this.root = root.getChild("duneedge");
 	}
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
@@ -44,10 +50,7 @@ public class DuneEdgeEntityModel extends EntityModel<Entity> {
 		return TexturedModelData.of(modelData, 32, 32);
 	}
 	@Override
-	public void setAngles(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-	}
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		duneedge.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+		this.root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
 }
