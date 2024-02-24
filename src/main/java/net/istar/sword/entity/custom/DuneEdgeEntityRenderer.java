@@ -1,5 +1,7 @@
 package net.istar.sword.entity.custom;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -8,9 +10,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
+@Environment(value= EnvType.CLIENT)
 public class DuneEdgeEntityRenderer
         extends EntityRenderer<DuneEdgeEntity> {
-    public static final Identifier TEXTURE = new Identifier("textures/item/duneedge.png");
+    public static final Identifier TEXTURE = new Identifier("textures/entity/duneedge.png");
     private final DuneEdgeEntityModel model;
 
     public DuneEdgeEntityRenderer(EntityRendererFactory.Context context) {
@@ -28,7 +31,7 @@ public class DuneEdgeEntityRenderer
     }
 
     @Override
-    public Identifier getTexture(DuneEdgeEntity duneedgeEntity) {
+    public Identifier getTexture(DuneEdgeEntity tridentEntity) {
         return TEXTURE;
     }
 }
