@@ -1,11 +1,9 @@
 package net.istar.sword.entity.custom;
 
-import net.istar.sword.entity.ModEntities;
 import net.istar.sword.item.ModItems;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -19,12 +17,9 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -38,10 +33,7 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
 
         super(entityType, world, PROJECTILE_ITEM);
     }
-    public DuneEdgeEntity(LivingEntity livingEntity, World world, ItemStack stack) {
 
-        super(ModEntities.DUNEEDGE, livingEntity, world, stack);
-    }
     @Override
     protected SoundEvent getHitSound() {
         return SoundEvents.ITEM_TRIDENT_HIT_GROUND;
@@ -83,23 +75,9 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
         }
         this.setVelocity(this.getVelocity().multiply(-0.01, -0.1, -0.01));
         float g = 1.0f;
-        if (this.getWorld() instanceof ServerWorld && this.getWorld().isThundering() && this.hasChanneling()) {
-            LightningEntity lightningEntity;
-            BlockPos blockPos = entity.getBlockPos();
-            if (this.getWorld().isSkyVisible(blockPos) && (lightningEntity = EntityType.LIGHTNING_BOLT.create(this.getWorld())) != null) {
-                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
-                lightningEntity.setChanneler(entity2 instanceof ServerPlayerEntity ? (ServerPlayerEntity)entity2 : null);
-                this.getWorld().spawnEntity(lightningEntity);
-                soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
-                g = 5.0f;
-            }
-        }
         this.playSound(soundEvent, g, 1.0f);
     }
 
-    public boolean hasChanneling() {
-        return EnchantmentHelper.hasChanneling(this.getItemStack());
-    }
     @Override
     @Nullable
     protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
