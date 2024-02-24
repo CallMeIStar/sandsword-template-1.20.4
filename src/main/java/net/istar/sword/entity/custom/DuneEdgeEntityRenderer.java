@@ -2,9 +2,12 @@ package net.istar.sword.entity.custom;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -26,6 +29,8 @@ public class DuneEdgeEntityRenderer
         matrixStack.push();
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(MathHelper.lerp(g, duneEdgeEntity.prevYaw, duneEdgeEntity.getYaw()) - 90.0f));
         matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(g, duneEdgeEntity.prevPitch, duneEdgeEntity.getPitch()) + 90.0f));
+        VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(vertexConsumerProvider, this.model.getLayer(this.getTexture(duneEdgeEntity)), false, duneEdgeEntity.isEnchanted());
+        this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0f, 1.0f, 1.0f, 1.0f);
         matrixStack.pop();
         super.render(duneEdgeEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }

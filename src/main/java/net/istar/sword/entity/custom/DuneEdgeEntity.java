@@ -8,6 +8,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -27,6 +30,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class DuneEdgeEntity extends PersistentProjectileEntity {
+    private static final TrackedData<Boolean> ENCHANTED = DataTracker.registerData(DuneEdgeEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final ItemStack PROJECTILE_ITEM = new ItemStack(ModItems.DUNEEDGE);
     private boolean dealtDamage;
 
@@ -108,9 +112,19 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("DealtDamage", this.dealtDamage);
+
+    }
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(ENCHANTED, false);
     }
     @Override
     public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this);
+    }
+
+    public boolean isEnchanted() {
+        return this.dataTracker.get(ENCHANTED);
     }
 }
