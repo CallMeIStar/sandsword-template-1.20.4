@@ -36,7 +36,7 @@ public class DuneEdgeEntityRenderer
     }
 
     @Override
-    public Identifier getTexture(DuneEdgeEntity tridentEntity) {
+    public Identifier getTexture(DuneEdgeEntity duneEdgeEntity) {
         return TEXTURE;
     }
 }
