@@ -77,24 +77,21 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
                 // Reduce pierce level on each hit
                 byte currentPierceLevel = this.getPierceLevel();
                 if (currentPierceLevel > 0) {
-                    this.setPierceLevel((byte) (currentPierceLevel - 1)); // Reduce pierce level by 1
+                    this.setPierceLevel((byte) (currentPierceLevel - 1));
                 }
 
 
-        // Reset `dealtDamage` for subsequent collisions within the same tick
         this.dealtDamage = false;
 
-        // Stop further entity collision handling if pierce level reaches 0
         if (this.getPierceLevel() <= 0) {
             return;
         }
-                this.onHit(livingEntity2); // <-- Moved outside the pierce level check
-                this.tick();              // <-- Added to advance entity state
+                this.onHit(livingEntity2);
+                this.tick();
 
             }
 
         }
-       // this.setVelocity(this.getVelocity().multiply(-0.01, -0.1, -0.01));
         float g = 1.0f;
         this.playSound(soundEvent, g, 1.0f);
     }
