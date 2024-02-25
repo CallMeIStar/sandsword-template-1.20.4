@@ -125,6 +125,8 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
     public void tick() {
         super.tick();
         DuneEdgeWhileProjectileFlyingTickProcedure.execute(this.getWorld(), this.getX(), this.getY(), this.getZ());
-    }
-
+        if(this.inGround && Math.random() <= 0.88 && this.inGroundTime == 1) {
+            this.discard();
+        }
+}
 }
