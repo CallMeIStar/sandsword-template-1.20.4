@@ -18,11 +18,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
+import net.minecraft.util.Rarity;
 
 public class DuneEdgeItem extends Item {
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
     public DuneEdgeItem(Item.Settings settings) {
-        super(settings);
+        super(settings.rarity(Rarity.RARE));
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", 6.0, EntityAttributeModifier.Operation.ADDITION));
         builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", -2.9f, EntityAttributeModifier.Operation.ADDITION));
@@ -38,7 +39,7 @@ public class DuneEdgeItem extends Item {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
         if (!world.isClient) {
             DuneEdgeEntity duneEdgeEntity = new DuneEdgeEntity(world, user, itemStack);
-            duneEdgeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 1.0f, 5f, 1.0f);
+            duneEdgeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 5f, 1.0f);
             world.spawnEntity(duneEdgeEntity);
             if (user.getAbilities().creativeMode) {
                 duneEdgeEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;

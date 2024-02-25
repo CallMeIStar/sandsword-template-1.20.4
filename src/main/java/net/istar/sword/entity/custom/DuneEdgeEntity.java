@@ -90,7 +90,7 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
     @Nullable
     protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
         if (this.dealtDamage) {
-            return null;
+            this.discard();
         }
         return super.getEntityCollision(currentPosition, nextPosition);
     }
