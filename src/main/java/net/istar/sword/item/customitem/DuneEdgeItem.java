@@ -25,7 +25,7 @@ public class DuneEdgeItem extends Item {
     public DuneEdgeItem(Item.Settings settings) {
         super(settings.rarity(Rarity.RARE));
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", 6.0, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", 4.0, EntityAttributeModifier.Operation.ADDITION));
         builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", -2.9f, EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
@@ -36,7 +36,7 @@ public class DuneEdgeItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.NEUTRAL, 0.8f, 0.8f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
         if (!world.isClient) {
             DuneEdgeEntity duneEdgeEntity = new DuneEdgeEntity(world, user, itemStack);
             duneEdgeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 5f, 1.0f);

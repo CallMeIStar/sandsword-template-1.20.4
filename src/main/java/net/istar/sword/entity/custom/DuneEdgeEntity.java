@@ -18,7 +18,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
-import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
@@ -75,13 +74,27 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
                     EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
                     EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity2);
                 }
-                this.onHit(livingEntity2);
-            }
-        } else if (entity.getType().isIn(EntityTypeTags.DEFLECTS_TRIDENTS)) {
-            this.deflect();
+                // Reduce pierce level on each hit
+                byte currentPierceLevel = this.getPierceLevel();
+                if (currentPierceLevel > 0) {
+                    this.setPierceLevel((byte) (currentPierceLevel - 1)); // Reduce pierce level by 1
+                }
+
+
+        // Reset `dealtDamage` for subsequent collisions within the same tick
+        this.dealtDamage = false;
+
+        // Stop further entity collision handling if pierce level reaches 0
+        if (this.getPierceLevel() <= 0) {
             return;
         }
-        this.setVelocity(this.getVelocity().multiply(-0.01, -0.1, -0.01));
+                this.onHit(livingEntity2); // <-- Moved outside the pierce level check
+                this.tick();              // <-- Added to advance entity state
+
+            }
+
+        }
+       // this.setVelocity(this.getVelocity().multiply(-0.01, -0.1, -0.01));
         float g = 1.0f;
         this.playSound(soundEvent, g, 1.0f);
     }
@@ -90,7 +103,7 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
     @Nullable
     protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
         if (this.dealtDamage) {
-            this.discard();
+            return null;
         }
         return super.getEntityCollision(currentPosition, nextPosition);
     }
@@ -128,5 +141,6 @@ public class DuneEdgeEntity extends PersistentProjectileEntity {
         if(this.inGround && Math.random() <= 0.88 && this.inGroundTime == 1) {
             this.discard();
         }
+
 }
 }
