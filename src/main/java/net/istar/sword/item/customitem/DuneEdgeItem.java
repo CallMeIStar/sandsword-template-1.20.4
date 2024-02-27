@@ -39,7 +39,7 @@ public class DuneEdgeItem extends Item {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.NEUTRAL, 0.8f, 0.8f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
         if (!world.isClient) {
             DuneEdgeEntity duneEdgeEntity = new DuneEdgeEntity(world, user, itemStack);
-            duneEdgeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 5f, 1.0f);
+            duneEdgeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 4f, 1.0f);
             world.spawnEntity(duneEdgeEntity);
             if (user.getAbilities().creativeMode) {
                 duneEdgeEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
