@@ -1,0 +1,12 @@
+Dune Scepter
+-> Durability 512? X
+-> Enchant - Mending, Unbreaking X
+-> Replace texture and model
+-> Max Stack 1 X
+-> Can be enchanted with infinity X
+-> Cooldown X
+{
+-> Consume Sand
+-> Enchant Infinity
+} -> Datapack
+

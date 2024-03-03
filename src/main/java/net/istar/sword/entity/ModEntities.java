@@ -18,4 +18,7 @@ public abstract class ModEntities {
                 new Identifier(SandSword.MOD_ID, "duneedge"), FabricEntityTypeBuilder.<DuneEdgeEntity>create(SpawnGroup.MISC, DuneEdgeEntity::new)
                         .dimensions(EntityDimensions.fixed(0.5f,0.5f)).build());
     }
+    public static void registerModEntities(){
+        SandSword.LOGGER.info("Registering Mod Entities for" + SandSword.MOD_ID);
+    }
 }

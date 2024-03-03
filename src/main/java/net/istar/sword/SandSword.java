@@ -1,6 +1,7 @@
 package net.istar.sword;
 
 import net.fabricmc.api.ModInitializer;
+import net.istar.sword.entity.ModEntities;
 import net.istar.sword.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,5 +13,6 @@ public class SandSword implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModItems();
+		ModEntities.registerModEntities();
 	}
 }

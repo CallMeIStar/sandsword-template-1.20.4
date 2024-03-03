@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.istar.sword.SandSword;
 import net.istar.sword.item.customitem.DuneEdgeItem;
+import net.istar.sword.item.customitem.DuneScepterItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
@@ -16,12 +17,17 @@ public class ModItems {
     private static void addItemsToIngredientTabItemGroup(FabricItemGroupEntries entries){
         entries.add(DUNEEDGE);
     }
-
+    public static final Item DUNESCEPTER = registerItem("dunescepter", new DuneScepterItem(new FabricItemSettings()));
+    private static void addItemToIngredientTabItemGroup(FabricItemGroupEntries entries){
+        entries.add(DUNESCEPTER);
+    }
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(SandSword.MOD_ID, name), item);
     }
+
     public static void registerModItems(){
         SandSword.LOGGER.info("Registering Mod Items for" + SandSword.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemsToIngredientTabItemGroup);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemToIngredientTabItemGroup);
     }
 }
