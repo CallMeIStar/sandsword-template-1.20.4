@@ -34,7 +34,7 @@ public class DuneScepterItem extends Item implements Vanishable {
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
-        return UseAction.SPEAR;
+        return UseAction.SPYGLASS;
     }
 
     @Override

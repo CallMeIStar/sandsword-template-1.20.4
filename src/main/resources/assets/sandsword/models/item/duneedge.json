@@ -1,7 +1,7 @@
 {
   "parent": "sandsword:custom/duneedge_model",
   "textures": {
-    "2": "sandsword:block/duneedge",
+    "3": "sandsword:block/duneedge",
     "particle": "sandsword:item/duneedge"
   }
 }
